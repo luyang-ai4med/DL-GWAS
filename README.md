@@ -8,6 +8,9 @@ This repository contains scripts for GWAS analysis. The preprint is [online](htt
 
 To replicate the analysis you will have to install the LDAK software > v5.2. Installation instructions and documentation can be found [here](https://dougspeed.com/).
 
+## Deep learning model 
+
+For patient phenotyping in UK Biobank, please refer to the method package (https://github.com/luyang-ai4med/POPDx).
 ## Usage
 
 First, you will have to prepare your phenotypes in [PLINK Format](https://www.cog-genomics.org/plink/2.0/input#pheno). This pipeline expects phenotypes to be adjusted for covariates. 
