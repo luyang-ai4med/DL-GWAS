@@ -6,7 +6,7 @@ This repository contains scripts for GWAS analysis. The preprint is [online](htt
 
 ## Installation
 
-To replicate the analysis you will have to install the LDAK software > v5.2. Installation instructions and documentation can be found [here](https://dougspeed.com/)
+To replicate the analysis you will have to install the LDAK software > v5.2. Installation instructions and documentation can be found [here](https://dougspeed.com/).
 
 ## Usage
 
