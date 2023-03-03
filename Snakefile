@@ -28,10 +28,10 @@ rule all:
 rule calculate_summary_statistics:
     input:
         samples = sample_list,
-        geno = PATH_UKBB + "ukb_snp_allChrs.bed",
+        geno = f'{PATH_UKBB}' + "ukb_snp_allChrs.bed", 
         pheno = "output/phenotypes_all.txt"
     params:
-        geno = PATH_UKBB + "ukb_snp_allChrs",
+        geno = f'{PATH_UKBB}' + "ukb_snp_allChrs",
         out = "output/sumstat/pheno.{pheno}"
     resources:
         mem_mb = 20000
@@ -45,10 +45,10 @@ rule clump_GWAS:
     input:
         gwas = "output/sumstat/pheno.{pheno}.pvalues",
         ref_samples = sample_list_20000,
-        ref = PATH_UKBB + "ukb_snp_allChrs.bed",
+        ref = f'{PATH_UKBB}' + "ukb_snp_allChrs.bed",
         snps = snp_MAF01
     params:
-        ref = PATH_UKBB + "ukb_snp_allChrs",
+        ref = f'{PATH_UKBB}' + "ukb_snp_allChrs",
         out = "output/GWAS/clump_MAF01.{pheno}"
     threads: 1
     resources:
@@ -63,10 +63,10 @@ rule clump_GWAS:
 rule calculate_summary_statistics_female:
     input:
         samples = sample_list_female,
-        geno = PATH_UKBB + "ukb_snp_allChrs.bed",
+        geno = f'{PATH_UKBB}' + "ukb_snp_allChrs.bed",
         pheno = "output/phenotypes_female.txt"
     params:
-        geno = PATH_UKBB + "ukb_snp_allChrs",
+        geno = f'{PATH_UKBB}' + "ukb_snp_allChrs",
         out = "output/sumstat/female_pheno.{pheno}"
     resources:
         mem_mb = 20000
@@ -82,10 +82,10 @@ rule clump_GWAS_female:
     input:
         gwas = "output/sumstat/female_pheno.{pheno}.pvalues",
         ref_samples = sample_list_20000,
-        ref = PATH_UKBB + "ukb_snp_allChrs.bed",
+        ref = f'{PATH_UKBB}' + "ukb_snp_allChrs.bed",
         snps = snp_MAF01
     params:
-        ref = PATH_UKBB + "ukb_snp_allChrs",
+        ref = f'{PATH_UKBB}' + "ukb_snp_allChrs",
         out = "output/GWAS/female_clump_MAF01.{pheno}"
     threads: 1
     resources:
@@ -100,10 +100,10 @@ rule clump_GWAS_female:
 rule calculate_summary_statistics_male:
     input:
         samples = sample_list_male,
-        geno = PATH_UKBB + "ukb_snp_allChrs.bed",
+        geno = f'{PATH_UKBB}' + "ukb_snp_allChrs.bed",
         pheno = "output/phenotypes_male.txt"
     params:
-        geno = PATH_UKBB + "ukb_snp_allChrs",
+        geno = f'{PATH_UKBB}' + "ukb_snp_allChrs",
         out = "output/sumstat/male_pheno.{pheno}"
     resources:
         mem_mb = 20000
@@ -118,10 +118,10 @@ rule clump_GWAS_male:
     input:
         gwas = "output/sumstat/male_pheno.{pheno}.pvalues",
         ref_samples = sample_list_20000,
-        ref = PATH_UKBB + "ukb_snp_allChrs.bed",
+        ref = f'{PATH_UKBB}' + "ukb_snp_allChrs.bed",
         snps = snp_MAF01
     params:
-        ref = PATH_UKBB + "ukb_snp_allChrs",
+        ref = f'{PATH_UKBB}' + "ukb_snp_allChrs",
         out = "output/GWAS/male_clump_MAF01.{pheno}"
     threads: 1
     resources:
@@ -179,16 +179,16 @@ rule estimate_heritability_male:
 rule estimate_prepredictor_heritabilities_preprocessing:
     input:
         samples = sample_list_5000, # 5000 are sufficient for this step
-        geno = PATH_UKBB + "ukb_snp_allChrs.bed",
-        annot = annotbld65_path + "bld0"
+        geno = f'{PATH_UKBB}' + "ukb_snp_allChrs.bed",
+        annot = f'{annotbld65_path}' + "bld0"
     params:
-        geno = PATH_UKBB + "ukb_snp_allChrs",
-        annot = annotbld65_path + "bld",
+        geno = f'{PATH_UKBB}' + "ukb_snp_allChrs",
+        annot = f'{annotbld65_path}' + "bld",
         out = "output/PRS/bld65.ldak",
         matrix = "output/PRS/bld65.ldak.matrix",
     threads: 8
     output:       
-        weights = annotbld65_path + "bld65"
+        weights = f'{annotbld65_path}' + "bld65"
     shell:
         """
         ldak5 --cut-weights sections --bfile {params.geno} --keep {input.samples} --max-threads {threads}
@@ -199,12 +199,12 @@ rule estimate_prepredictor_heritabilities_preprocessing:
 rule calculate_snp_tags:
     input:
         samples = sample_list_5000, # 5000 are sufficient for this step
-        geno = PATH_UKBB + "ukb_snp_allChrs.bed",
-        annot = annotbld65_path + "bld0",
-        weights = annotbld65_path + "bld65",
+        geno = f'{PATH_UKBB}' + "ukb_snp_allChrs.bed",
+        annot = f'{annotbld65_path}' + "bld0",
+        weights = f'{annotbld65_path}' + "bld65",
     params:
-        geno = PATH_UKBB + "ukb_snp_allChrs",
-        annot = annotbld65_path + "bld",
+        geno = f'{PATH_UKBB}' + "ukb_snp_allChrs",
+        annot = f'{annotbld65_path}' + "bld",
         out = "output/PRS/bld65.ldak"
     threads: 8
     output:   
@@ -237,10 +237,10 @@ rule estimate_PRS_predictors:
     input:
         pheno = "output/phenotypes_all.txt",
         samples = sample_list,
-        geno = PATH_UKBB + "ukb_snp_allChrs.bed",
+        geno = f'{PATH_UKBB}' + "ukb_snp_allChrs.bed",
         indhers = "output/PRS/bld65.ldak.{pheno}.ind.hers"
     params:
-        geno = PATH_UKBB + "ukb_snp_allChrs",
+        geno = f'{PATH_UKBB}' + "ukb_snp_allChrs",
         out = "output/PRS/phenotype_all_samples_PRS.{pheno}"
     threads: 8
     resources:
@@ -286,10 +286,10 @@ rule estimate_PRS_predictors_female:
     input:
         pheno = "output/phenotypes_female.txt",
         samples = sample_list_female,
-        geno = PATH_UKBB + "ukb_snp_allChrs.bed",
+        geno = f'{PATH_UKBB}' + "ukb_snp_allChrs.bed",
         indhers = "output/PRS/female_bld65.ldak.{pheno}.ind.hers"
     params:
-        geno = PATH_UKBB + "ukb_snp_allChrs",
+        geno = f'{PATH_UKBB}' + "ukb_snp_allChrs",
         out = "output/PRS/female_phenotype_all_samples_PRS.{pheno}"
     threads: 8
     resources:
@@ -305,10 +305,10 @@ rule estimate_PRS_predictors_male:
     input:
         pheno = "output/phenotypes_male.txt",
         samples = sample_list_male,
-        geno = PATH_UKBB + "ukb_snp_allChrs.bed",
+        geno = f'{PATH_UKBB}' + "ukb_snp_allChrs.bed",
         indhers = "output/PRS/male_bld65.ldak.{pheno}.ind.hers"
     params:
-        geno = PATH_UKBB + "ukb_snp_allChrs",
+        geno = f'{PATH_UKBB}' + "ukb_snp_allChrs",
         out = "output/PRS/male_phenotype_all_samples_PRS.{pheno}"
     threads: 8
     resources:
@@ -324,10 +324,10 @@ rule calculate_validate_PRS_scores:
     input:
         estimators = "output/PRS/phenotype_all_samples_PRS.{pheno}.effects",
         samples = sample_list,
-        geno = PATH_UKBB + "ukb_snp_allChrs.bed",
+        geno = f'{PATH_UKBB}' + "ukb_snp_allChrs.bed",
         test = "output/phenotypes_future_test.txt"
     params:
-        geno = PATH_UKBB + "ukb_snp_allChrs",
+        geno = f'{PATH_UKBB}' + "ukb_snp_allChrs",
         out = "output/PRS/phenotype_all_samples_PRS.{pheno}"
     threads: 8
     resources:
@@ -343,10 +343,10 @@ rule calculate_validate_PRS_scores_female:
     input:
         estimators = "output/PRS/female_phenotype_all_samples_PRS.{pheno}.effects",
         samples = sample_list_female,
-        geno = PATH_UKBB + "ukb_snp_allChrs.bed",
+        geno = f'{PATH_UKBB}' + "ukb_snp_allChrs.bed",
         test = "output/phenotypes_future_test.txt"
     params:
-        geno = PATH_UKBB + "ukb_snp_allChrs",
+        geno = f'{PATH_UKBB}' + "ukb_snp_allChrs",
         out = "output/PRS/female_phenotype_all_samples_PRS.{pheno}"
     threads: 8
     resources:
@@ -362,10 +362,10 @@ rule calculate_validate_PRS_scores_male:
     input:
         estimators = "output/PRS/male_phenotype_all_samples_PRS.{pheno}.effects",
         samples = sample_list_male,
-        geno = PATH_UKBB + "ukb_snp_allChrs.bed",
+        geno = f'{PATH_UKBB}' + "ukb_snp_allChrs.bed",
         test = "output/phenotypes_future_test.txt"
     params:
-        geno = PATH_UKBB + "ukb_snp_allChrs",
+        geno = f'{PATH_UKBB}' + "ukb_snp_allChrs",
         out = "output/PRS/male_phenotype_all_samples_PRS.{pheno}"
     threads: 8
     resources:
