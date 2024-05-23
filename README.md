@@ -2,7 +2,7 @@
 
 This repository contains scripts for GWAS analysis. The preprint is [online](https://www.medrxiv.org/content/10.1101/2023.01.18.23284383v1). 
 
-<img src="blob/Overview.png" width="800" >
+<img src="blob/Overview.jpg" width="800" >
 
 ## Installation
 
